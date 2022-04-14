@@ -1,28 +1,33 @@
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import React from "react";
 
-const DisplayList = ({ musics }) => {
+const DisplayList = ({ musics, navigation }) => {
   const musicFiles = [...new Set(musics)];
   return (
     <>
       {musicFiles.map((music) => (
-        <View key={music.id} style={styles.container}>
-          <Image
-            source={{ uri: "https://picsum.photos/200" }}
-            style={styles.banner}
-          />
-          <View style={{ width: "83%" }}>
-            <Text style={styles.filename}>
-              {music.filename
-                .replace(".mp3", " ")
-                .replace(".wav", " ")
-                .replace("_NaijaMusic.com.ng", "")}
-            </Text>
-            <Text style={styles.duration}>{`${(music.duration / 60).toFixed(
-              2
-            )} mins`}</Text>
+        <TouchableOpacity
+          key={music.id}
+          onPress={() => navigation.navigate("playscreen", { data: music })}
+        >
+          <View style={styles.container}>
+            <Image
+              source={{ uri: "https://picsum.photos/200" }}
+              style={styles.banner}
+            />
+            <View style={{ width: "83%" }}>
+              <Text style={styles.filename}>
+                {music.filename
+                  .replace(".mp3", " ")
+                  .replace(".wav", " ")
+                  .replace("_NaijaMusic.com.ng", "")}
+              </Text>
+              <Text style={styles.duration}>{`${(music.duration / 60).toFixed(
+                2
+              )} mins`}</Text>
+            </View>
           </View>
-        </View>
+        </TouchableOpacity>
       ))}
     </>
   );

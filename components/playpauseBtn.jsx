@@ -2,18 +2,18 @@ import React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
-const playpauseBtn = (props) => {
+const PlaypauseBtn = (props) => {
   return (
     <TouchableOpacity
       style={styles.playButtonContainer}
-      onPress={props.onPress}
+      onPress={props.onpress}
     >
       <FontAwesome name={props.icons} size={32} color="#3D425C" />
     </TouchableOpacity>
   );
 };
 
-export default playpauseBtn;
+export default PlaypauseBtn;
 
 const styles = StyleSheet.create({
   playButtonContainer: {

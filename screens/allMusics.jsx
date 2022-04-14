@@ -11,7 +11,7 @@ import * as Medialibrary from "expo-media-library";
 import DisplayList from "../components/displayList";
 import { TextInput } from "react-native-paper";
 
-const AllMusics = () => {
+const AllMusics = ({ navigation }) => {
   const [musicFiles, setmusicFiles] = useState([]);
 
   const getpermission = async () => {
@@ -62,7 +62,11 @@ const AllMusics = () => {
       </Text>
       <ScrollView>
         {musicFiles.map((music) => (
-          <DisplayList key={music.id} musics={musicFiles} />
+          <DisplayList
+            key={music.id}
+            musics={musicFiles}
+            navigation={navigation}
+          />
         ))}
       </ScrollView>
     </View>
@@ -74,8 +78,9 @@ export default AllMusics;
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 7,
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight + 10 : 10,
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 10,
     backgroundColor: "#000",
+    height: "100%",
   },
   input: {
     borderRadius: 7,

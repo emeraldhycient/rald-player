@@ -12,8 +12,16 @@ export default function App() {
   function MyStack() {
     return (
       <Stack.Navigator>
-        <Stack.Screen name="list" component={AllMusics} />
-        <Stack.Screen name="playscreen" component={PlayScreen} />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="list"
+          component={AllMusics}
+        />
+        <Stack.Screen
+          name="playscreen"
+          component={PlayScreen}
+          options={({ route }) => ({ title: route.params.data.filename })}
+        />
       </Stack.Navigator>
     );
   }

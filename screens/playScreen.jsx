@@ -1,10 +1,13 @@
 import { StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Slider from "react-native-slider";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import AudioRecorderPlayer from "react-native-audio-recorder-player";
+import PlaypauseBtn from "../components/playpauseBtn";
 
-const PlayScreen = () => {
+const PlayScreen = ({ route, navigation }) => {
+  const { data } = route.params;
+
   const [isAlreadyPlay, setisAlreadyPlay] = useState(false);
   const [duration, setDuration] = useState("00:00:00");
   const [timeElapsed, setTimeElapsed] = useState("00:00:00");
@@ -16,18 +19,17 @@ const PlayScreen = () => {
   const onStartPress = async (e) => {
     setisAlreadyPlay(true);
     setInprogress(true);
-    const path = "file://" + dirs + "/" + playlist[current_track].path;
-    audioRecorderPlayer.startPlayer(path);
+    audioRecorderPlayer.startPlayer(data.uri);
     audioRecorderPlayer.setVolume(1.0);
 
     audioRecorderPlayer.addPlayBackListener(async (e) => {
-      if (e.current_position === e.duration) {
+      if (e.currentPosition === e.duration) {
         audioRecorderPlayer.stopPlayer();
       }
       let percent = Math.round(
-        (Math.floor(e.current_position) / Math.floor(e.duration)) * 100
+        (Math.floor(e.currentPosition) / Math.floor(e.duration)) * 100
       );
-      setTimeElapsed(e.current_position);
+      setTimeElapsed(e.currentPosition);
       setPercent(percent);
       setDuration(e.duration);
     });
@@ -41,10 +43,10 @@ const PlayScreen = () => {
   return (
     <View>
       {!isAlreadyPlay ? (
-        <PlayButton function={() => onStartPress()} icons="play" />
+        <PlaypauseBtn onpress={() => onStartPress()} icons="play" />
       ) : (
-        <PlayButton function={() => onPausePress()} icons="pause" />
-      )}{" "}
+        <PlaypauseBtn onpress={() => onPausePress()} icons="pause" />
+      )}
     </View>
   );
 };
